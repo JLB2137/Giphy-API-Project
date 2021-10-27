@@ -71,7 +71,7 @@ $shuffle.on("click", function(evt) {
     $img.attr('src',`${gif.imageSource}`)
 })
 
-
+//running the giphyFunction with new input from the user
 $submit.on("click", function() {
     updateSearch($userInput.val())
     //reset the results counter
@@ -80,12 +80,17 @@ $submit.on("click", function() {
     giphyAPI()
 })
 
-
+//updates the gif rating if the user adjusts this value
+//will update once a new search is submitted
 $select.on("change", function(evt) {
     //set the gif rating to what has been selected
     gifRating = $(evt.target).val()
     //updated the gif rating string for promise setup
     gif.rating = `&rating=${gifRating}`
+    //reset the results counter
+    gif.resultsCounter = 0
+    //rerun the giphyAPI to adjust the value
+    giphyAPI()
 })
 
 
