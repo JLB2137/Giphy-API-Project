@@ -64,3 +64,7 @@ $submit.on("click", function(evt) {
 })
 
 
+//need to get the length of the object array that is returned,
+// this way I don't keep interating when there aren't any gifs left
+
+
