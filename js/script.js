@@ -35,6 +35,8 @@ function giphyAPI() {
         $img.attr('src',`${gif.imageSource}`)
         //set the response to be used globally by other buttons/functions
         gif.response = response
+        console.log('length',gif.response.data.length)
+        console.log(gif.response)
         
 
     }, function(error) {
@@ -55,7 +57,7 @@ $shuffle.on("click", function(evt) {
     //prevent default behavior
     evt.preventDefault()
     //update the counter to move to the next gif in the array only if we have more gifs in the stack left
-    if (gif.resultsCounter < gif.response.data.length) {
+    if (gif.resultsCounter < gif.response.data.length - 1) {
         gif.resultsCounter++
         console.log('gifCounter',gif.resultsCounter)
     //otherwise reset the counter to the first gif
