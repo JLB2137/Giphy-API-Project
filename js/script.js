@@ -4,13 +4,16 @@ const $img = $('img')
 const $shuffle = $('input[value="Shuffle"]')
 const $userInput = $('input[type="text"]')
 const $submit = $('input[value="Submit"]')
+const $select = $('select');
 const URL = 'https://api.giphy.com/v1/gifs/search'
 const API_KEY = '?api_key=hvGei9QgKHO2wGpIseEMtFaRyyd0dPN2'
 let searchInput = 'cheese'
+let gifRating = 'g'
 let promise = ''
 //object for interating with the gif setup
 const gif = {
     search: `&q=${searchInput}`,
+    rating: `&rating=${gifRating}`,
     imageSource: '',
     resultsCounter: 0
 }
@@ -19,7 +22,9 @@ const gif = {
 
 function giphyAPI() {
     
-    promise = $.ajax(`${URL}${API_KEY}${gif.search}`)
+    console.log(`${URL}${API_KEY}${gif.search}${gif.rating}`)
+
+    promise = $.ajax(`${URL}${API_KEY}${gif.search}${gif.rating}`)
 
     promise.then(function(response) {
         //set the image source equal to the response
@@ -56,12 +61,21 @@ function updateSearch(input) {
     gif.search = `&q=${searchInput}`
 }
 
-$submit.on("click", function(evt) {
+$submit.on("click", function() {
     updateSearch($userInput.val())
     //reset the results counter
     gif.resultsCounter = 0
     giphyAPI()
 })
+
+
+$select.on("change", function(evt) {
+    //set the gif rating to what has been selected
+    gifRating = $(evt.target).val()
+    //updated the gif rating string for promise setup
+    gif.rating = `&rating=${gifRating}`
+})
+
 
 
 //need to get the length of the object array that is returned,
