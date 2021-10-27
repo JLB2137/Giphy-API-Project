@@ -10,12 +10,14 @@ const API_KEY = '?api_key=hvGei9QgKHO2wGpIseEMtFaRyyd0dPN2'
 let searchInput = 'cheese'
 let gifRating = 'g'
 let promise = ''
+let responseGlobal
 //object for interating with the gif setup
 const gif = {
     search: `&q=${searchInput}`,
     rating: `&rating=${gifRating}`,
     imageSource: '',
-    resultsCounter: 0
+    resultsCounter: 0,
+    response: 'response'
 }
 
 
@@ -29,31 +31,18 @@ function giphyAPI() {
     promise.then(function(response) {
         //set the image source equal to the response
         gif.imageSource = response.data[gif.resultsCounter].images.original.url
-        //console.log(response.data[0].url)
+        //set the image on the index file equal to the source of the first gif in the response
         $img.attr('src',`${gif.imageSource}`)
-        //if you hit the shuffle button change the gif to the next in the stack that was returned
-        shuffle(response)
+        //set the response to be used globally by other buttons/functions
+        gif.response = response
+        
 
     }, function(error) {
         console.log(error)
     })
 }
 
-
-function shuffle(response) {
-    $shuffle.on("click", function(evt) {
-        //prevent default behavior
-        evt.preventDefault()
-        //set the image source equal to the response
-        gif.imageSource = response.data[gif.resultsCounter].images.original.url
-        //update the counter to move to the next gif in the array
-        gif.resultsCounter++
-        //update the image with the next gif in the array
-        $img.attr('src',`${gif.imageSource}`)
-    })
-
-}
-
+//updates the search inputs so that the API string can be adjusted correctly
 function updateSearch(input) {
     //update the searchInput variable to what is the input
     searchInput = input
@@ -61,10 +50,31 @@ function updateSearch(input) {
     gif.search = `&q=${searchInput}`
 }
 
+//setting up the shuffle event
+$shuffle.on("click", function(evt) {
+    //prevent default behavior
+    evt.preventDefault()
+    //update the counter to move to the next gif in the array only if we have more gifs in the stack left
+    if (gif.resultsCounter < gif.response.data.length) {
+        gif.resultsCounter++
+        console.log('gifCounter',gif.resultsCounter)
+    //otherwise reset the counter to the first gif
+    } else {
+        gif.resultsCounter = 0
+        console.log('gifCounter',gif.resultsCounter)
+    }
+    //set the image source equal to the response
+    gif.imageSource = gif.response.data[gif.resultsCounter].images.original.url
+    //update the image with the next gif in the array
+    $img.attr('src',`${gif.imageSource}`)
+})
+
+
 $submit.on("click", function() {
     updateSearch($userInput.val())
     //reset the results counter
     gif.resultsCounter = 0
+    //rerun the giphyAPI to update the image in the index
     giphyAPI()
 })
 
@@ -76,9 +86,5 @@ $select.on("change", function(evt) {
     gif.rating = `&rating=${gifRating}`
 })
 
-
-
-//need to get the length of the object array that is returned,
-// this way I don't keep interating when there aren't any gifs left
 
 
