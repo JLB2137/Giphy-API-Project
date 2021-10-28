@@ -9,7 +9,12 @@
 
 ## Screenshots
 
-![The San Juan Mountains are beautiful!](/images/san-juan-mountains.jpg "San Juan Mountains")
+##### *Giphy Search Engine!*
+![Giphy Search Engine!](/images/giphy-search-engine.png "Giphy Search Engine")
+
+##### *Giphy Search Engine Rating Selector*
+![Giphy Search Engine Rating Selector](/images/rating-selector.png "Giphy Search Engine Rating Selector")
+
 
 ## Getting Started
 
