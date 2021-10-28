@@ -3,7 +3,8 @@
 const $img = $('img')
 const $shuffle = $('input[value="Shuffle"]')
 const $userInput = $('input[type="text"]')
-const $submit = $('input[value="Submit"]')
+const $submit = $('#submit-button')
+const $form = $('.user-search')
 const $copy = $('input[value="Copy"]')
 const $select = $('select');
 const URL = 'https://api.giphy.com/v1/gifs/search'
@@ -95,15 +96,21 @@ $select.on("change", function(evt) {
 })
 
 
-
-/*$submit.on("keypress", function() {
-    console.log("press enter")
-    updateSearch($userInput.val())
-    //reset the results counter
-    gif.resultsCounter = 0
-    //rerun the giphyAPI to update the image in the index
-    giphyAPI()
-})*/
+//capture the input when the enter key is hit
+$userInput.keypress(function(evt) {
+    if (evt.which == 13) {
+        console.log("press enter")
+        $form.submit(function(submitEvent) {
+            submitEvent.preventDefault()
+            updateSearch($userInput.val())
+            //reset the results counter
+            gif.resultsCounter = 0
+            //rerun the giphyAPI to update the image in the index
+            giphyAPI()
+        }
+        )
+    }
+})
 
 $copy.on("click", function(evt) {
     evt.preventDefault()
