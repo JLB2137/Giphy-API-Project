@@ -4,6 +4,7 @@ const $img = $('img')
 const $shuffle = $('input[value="Shuffle"]')
 const $userInput = $('input[type="text"]')
 const $submit = $('input[value="Submit"]')
+const $copy = $('input[value="Copy"]')
 const $select = $('select');
 const URL = 'https://api.giphy.com/v1/gifs/search'
 const API_KEY = '?api_key=hvGei9QgKHO2wGpIseEMtFaRyyd0dPN2'
@@ -95,3 +96,18 @@ $select.on("change", function(evt) {
 
 
 
+/*$submit.on("keypress", function() {
+    console.log("press enter")
+    updateSearch($userInput.val())
+    //reset the results counter
+    gif.resultsCounter = 0
+    //rerun the giphyAPI to update the image in the index
+    giphyAPI()
+})*/
+
+$copy.on("click", function(evt) {
+    evt.preventDefault()
+    console.log(gif.response.data[gif.resultsCounter].images.original.webp)
+    let x = gif.response.data[gif.resultsCounter].images.original.webp
+    navigator.clipboard.writeText(`${x}`)
+})
