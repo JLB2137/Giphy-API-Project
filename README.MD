@@ -29,4 +29,4 @@ This app is simple to use and allows you to cycle gifs quickly pulling from Giph
 
 ## Future Enhancements
 
-I would love to add a counter to the page where you can see the number of results as you "Shuffle" through the results. I would also like to setup that the default behavior of the Enter key is to hit the submit button.
+I would love to add a counter to the page where you can see the number of results as you "Shuffle" through the results. I would also like to use an arrow key to continue to move back and forth through the stack of gifs returned.
